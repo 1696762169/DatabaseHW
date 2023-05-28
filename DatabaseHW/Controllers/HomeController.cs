@@ -7,12 +7,12 @@ namespace DatabaseHW.Controllers
     public class HomeController : Controller
     {
         // 定义一个 ILogger<HomeController> 类型的私有成员变量，用于记录日志
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> m_Logger;
 
         // 通过依赖注入，自动提供 ILogger<HomeController> 实例
         public HomeController(ILogger<HomeController> logger)
         {
-            _logger = logger;
+            m_Logger = logger;
         }
 
         // Index 操作方法，处理对应的 Index 请求
@@ -37,5 +37,4 @@ namespace DatabaseHW.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-
 }

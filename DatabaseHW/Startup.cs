@@ -1,11 +1,30 @@
-﻿namespace DatabaseHW
+﻿using DatabaseHW.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace DatabaseHW
 {
     public class Startup
     {
+        private readonly IConfiguration m_Configuration;
+        public Startup(IConfiguration configuration)
+        {
+            m_Configuration = configuration;
+        }
+
         // 向应用中添加服务
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // 添加数据库上下文服务 指定数据库连接参数
+            services.AddDbContext<DataContext>(options =>
+            {
+                // 从配置文件中读取数据库连接字符串
+                string? connectionString = m_Configuration.GetConnectionString("DefaultConnection");
+                if (connectionString != null)
+                    options.UseSqlServer(connectionString);
+                else
+                    throw new InvalidOperationException("未找到数据库连接字符串");
+            });
         }
 
         // 配置请求处理管道
