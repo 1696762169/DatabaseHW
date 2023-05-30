@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "name": "database_hw",
+  "private": true,
+  "devDependencies": {
+    "gulp": "4.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "5.2.3",
+    "jquery": "3.7.0",
+    "jquery-validation": "1.19.5"
+  }
+}

@@ -17,7 +17,7 @@ namespace DatabaseHW
             dataContext.Test();
             #endregion
             // 添加服务
-            startup.ConfigureServices(builder.Services);
+            startup.ConfigureServices(builder.Services, builder.Environment);
             // 创建应用
             WebApplication app = builder.Build();
             // 配置请求处理管道

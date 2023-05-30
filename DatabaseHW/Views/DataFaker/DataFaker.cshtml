@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using DatabaseHW.ViewModels.Development
+@model DataFakerViewModel
+
+@{
+	ViewData["Title"] = "测试数据管理";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="form-group">
+	<p><label for="type">选择类型</label></p>
+	<p><select asp-for="@Model.SelectedType" asp-items="new SelectList(DataFakerViewModel.Types)" class="form-control" id="type"></select></p>
+</div>
+<hr/>
+<form asp-controller="DataFaker" asp-action="GenerateData">
+	<input type="hidden" name="SelectedType" id="generate-type" value="@Model.SelectedType" />
+	<input type="hidden" name="GetCount" value="@Model.GetCount" />
+	<div class="form-group">
+		<p>
+			<label for="generate-count">生成数量</label>
+		</p>
+		<p>
+			<input type="number" asp-for="GenerateCount" class="form-control" id="generate-count">
+		</p>
+		<button type="submit" class="btn btn-primary">生成数据</button>
+	</div>
+</form>
+<hr/>
+<form asp-controller="DataFaker" asp-action="RemoveAllData">
+	<input type="hidden" name="SelectedType" id="remove-type" value="@Model.SelectedType" />
+	<input type="hidden" name="GenerateCount" value="@Model.GenerateCount" />
+	<input type="hidden" name="GetCount" value="@Model.GetCount" />
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary">删除全部数据</button>
+	</div>
+</form>
+<hr/>
+<form asp-controller="DataFaker" asp-action="GetAllData">
+	<input type="hidden" name="SelectedType" id="get-type" value="@Model.SelectedType" />
+	<input type="hidden" name="GenerateCount" value="@Model.GenerateCount" />
+	<div class="form-group">
+		<p>
+			<label for="get-count">查看数量</label>
+		</p>
+		<p>
+			<input type="number" asp-for="GetCount" class="form-control" id="get-count">
+		</p>
+		<button type="submit" class="btn btn-primary">查看数据</button>
+	</div>
+</form>
+<hr/>
+@if (TempData["message"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["message"]
+	</div>
+}
+
+@section Scripts
+{
+	@*使用JS代码来更新所有表单中的值*@
+	<script>
+	    document.getElementById('type').addEventListener('change', function() {
+	        var selectedType = this.value;
+	        document.getElementById('generate-type').value = selectedType;
+	        document.getElementById('remove-type').value = selectedType;
+	        document.getElementById('get-type').value = selectedType;
+	    });
+	</script>
+}
