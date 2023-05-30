@@ -1,13 +1,29 @@
+using DatabaseHW.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace DatabaseHW
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            WebHost.CreateDefaultBuilder(args)  // 创建Web应用程序构建器
-                .UseStartup<Startup>()  // 应用初始配置
-                .Build()    // 构建Web应用程序
-                .Run(); // 启动Web应用程序
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            Startup startup = new(builder.Configuration);
+
+            #region 娴嬭瘯
+            DbContextOptionsBuilder<DataContext> optionsBuilder = new();
+            optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            DataContext dataContext = new(optionsBuilder.Options);
+            dataContext.Test();
+            #endregion
+            // 娣诲姞鏈嶅姟
+            startup.ConfigureServices(builder.Services);
+            // 鍒涘缓搴旂敤
+            WebApplication app = builder.Build();
+            // 閰嶇疆璇锋眰澶勭悊绠￠亾
+            startup.Configure(app, builder.Environment);
+            // 杩愯搴旂敤
+            app.Run();
         }
     }
 }

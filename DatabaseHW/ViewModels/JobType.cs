@@ -1,4 +1,4 @@
-﻿namespace DatabaseHW.Models
+﻿namespace DatabaseHW.ViewModels
 {
     /// <summary>
     /// 岗位分类枚举

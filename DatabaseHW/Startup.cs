@@ -14,7 +14,6 @@ namespace DatabaseHW
         // 向应用中添加服务
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             // 添加数据库上下文服务 指定数据库连接参数
             services.AddDbContext<DataContext>(options =>
             {
@@ -25,6 +24,7 @@ namespace DatabaseHW
                 else
                     throw new InvalidOperationException("未找到数据库连接字符串");
             });
+            services.AddControllersWithViews();
         }
 
         // 配置请求处理管道
