@@ -1,11 +1,7 @@
-﻿using System.Drawing;
-using System.Reflection;
-using System.Text;
-using Bogus;
+﻿using Bogus;
 using DatabaseHW.Data;
 using DatabaseHW.Models;
 using DatabaseHW.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseHW.Services.Development
 {
@@ -23,6 +19,16 @@ namespace DatabaseHW.Services.Development
         private List<int> m_WorkPlaces = new();
         private List<int> m_Communities = new();
         private List<int> m_Companies = new();
+
+        private const float LONGITUDE_MAX = 114.05f;
+        private const float LONGITUDE_MIN = 112.95f;
+        private const float LATITUDE_MAX = 23.93f;
+        private const float LATITUDE_MIN = 22.43f;
+
+        private static readonly List<string> _AllDistricts = new()
+        {
+            "白云区", "从化区", "海珠区", "花都区", "黄埔区", "荔湾区", "南沙区", "番禺区", "天河区", "越秀区", "增城区"
+        };
 
         public DataFaker(DataContext context)
         {
@@ -71,10 +77,10 @@ namespace DatabaseHW.Services.Development
             return new Workplace
             {
                 WorkplaceId = m_Faker.UniqueIndex,
-                Name = m_Faker.Address.StreetAddress(),
-                Address = m_Faker.Address.FullAddress(),
-                Longitude = (float)m_Faker.Address.Longitude(),
-                Latitude = (float)m_Faker.Address.Latitude(),
+                Name = m_Faker.Hacker.Adjective() + m_Faker.Hacker.Noun(),
+                Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
+                Longitude = (float)m_Faker.Address.Longitude(LONGITUDE_MIN, LONGITUDE_MAX),
+                Latitude = (float)m_Faker.Address.Latitude(LATITUDE_MIN, LATITUDE_MAX),
             };
         }
         private Community FakeCommunity()
@@ -82,10 +88,10 @@ namespace DatabaseHW.Services.Development
             return new Community
             {
                 CommunityId = m_Faker.UniqueIndex,
-                Name = m_Faker.Address.StreetAddress(),
-                Address = m_Faker.Address.FullAddress(),
-                Longitude = (float)m_Faker.Address.Longitude(),
-                Latitude = (float)m_Faker.Address.Latitude(),
+                Name = m_Faker.Hacker.Adjective() + m_Faker.Hacker.Noun(),
+                Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
+                Longitude = (float)m_Faker.Address.Longitude(LONGITUDE_MIN, LONGITUDE_MAX),
+                Latitude = (float)m_Faker.Address.Latitude(LATITUDE_MIN, LATITUDE_MAX),
             };
         }
         private House FakeHouse()

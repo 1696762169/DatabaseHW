@@ -1,4 +1,5 @@
 ﻿using DatabaseHW.Data;
+using DatabaseHW.Services;
 using DatabaseHW.Services.Interface;
 using DatabaseHW.Services.Development;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,10 @@ namespace DatabaseHW
                 else
                     throw new InvalidOperationException("未找到数据库连接字符串");
             });
+
+            // 添加数据筛选器服务
+            services.AddScoped<IWorkplaceFilter, PrimaryFilter>();
+            services.AddScoped<ICommunityFilter, PrimaryFilter>();
 
             // 添加测试数据服务
             if (env.IsDevelopment())
