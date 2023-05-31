@@ -1,3 +1,4 @@
+//#define DEBUG_DB_CONTEXT
 using DatabaseHW.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +11,13 @@ namespace DatabaseHW
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             Startup startup = new(builder.Configuration);
 
-            #region 测试
+#if DEBUG_DB_CONTEXT
             DbContextOptionsBuilder<DataContext> optionsBuilder = new();
             optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             DataContext dataContext = new(optionsBuilder.Options);
             dataContext.Test();
-            #endregion
+#endif
+
             // 添加服务
             startup.ConfigureServices(builder.Services, builder.Environment);
             // 创建应用

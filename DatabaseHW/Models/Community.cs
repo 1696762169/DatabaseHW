@@ -9,7 +9,7 @@ namespace DatabaseHW.Models
     /// </summary>
     [Index(nameof(Longitude))]
     [Index(nameof(Latitude))]
-    public class Community
+    public class Community : Interface.ILocation
     {
         public int CommunityId { get; set; }    // 小区ID（主键，自增）
         [MaxLength(50)]

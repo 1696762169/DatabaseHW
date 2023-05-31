@@ -8,7 +8,7 @@ namespace DatabaseHW.Models
     /// </summary>
     [Index(nameof(Longitude))]
     [Index(nameof(Latitude))]
-    public class Workplace
+    public class Workplace : Interface.ILocation
     {
         public int WorkplaceId { get; set; }  // 工作地点ID（主键，自增）
         [MaxLength(50)]

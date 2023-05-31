@@ -1,5 +1,8 @@
-﻿using DatabaseHW.Models;
+﻿using DatabaseHW.Data;
+using DatabaseHW.Models;
+using DatabaseHW.Models.Interface;
 using DatabaseHW.Services.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseHW.Services
 {
@@ -8,34 +11,41 @@ namespace DatabaseHW.Services
     /// </summary>
     public class PrimaryFilter : IWorkplaceFilter, ICommunityFilter
     {
-        List<Workplace> IWorkplaceFilter.FilterByDistance(float longitude, float latitude, float distance)
+        private readonly DataContext m_Context;
+        public PrimaryFilter(DataContext context)
         {
-            throw new NotImplementedException();
+            m_Context = context;
         }
 
-        List<Community> ICommunityFilter.FilterByKeyword(string keyword)
+        #region “公共”接口
+        List<Workplace> IWorkplaceFilter.FilterByDistance(float longitude, float latitude, float distance) => 
+            Filter(m_Context.Workplaces, workplace => ByDistance(longitude, latitude, distance, workplace));
+        List<Workplace> IWorkplaceFilter.FilterByKeyword(string keyword) =>
+            Filter(m_Context.Workplaces, workplace => ByKeyword(keyword, workplace));
+        List<Workplace> IWorkplaceFilter.Filter(string keyword, float longitude, float latitude, float distance) =>
+            Filter(m_Context.Workplaces, workplace => ByKeyword(keyword, workplace) && ByDistance(longitude, latitude, distance, workplace));
+
+        List<Community> ICommunityFilter.FilterByDistance(float longitude, float latitude, float distance) =>
+            Filter(m_Context.Communities, community => ByDistance(longitude, latitude, distance, community));
+        List<Community> ICommunityFilter.FilterByKeyword(string keyword) =>
+            Filter(m_Context.Communities, community => ByKeyword(keyword, community));
+        List<Community> ICommunityFilter.Filter(string keyword, float longitude, float latitude, float distance) =>
+            Filter(m_Context.Communities, community => ByKeyword(keyword, community) && ByDistance(longitude, latitude, distance, community));
+        #endregion
+
+        // 筛选筛选数据并返回
+        private List<T> Filter<T>(DbSet<T> set, Func<T, bool> filter) where T : class, ILocation => set.Where(filter).ToList();
+
+        // 按关键字筛选
+        private bool ByKeyword(string keyword, ILocation location)
         {
-            throw new NotImplementedException();
+            return location.Name.Contains(keyword) || location.Address.Contains(keyword);
         }
 
-        List<Community> ICommunityFilter.Filter(string keyword, float longitude, float latitude, float distance)
+        // 按距离筛选
+        private bool ByDistance(float longitude, float latitude, float distance, ILocation location)
         {
-            throw new NotImplementedException();
-        }
-
-        List<Community> ICommunityFilter.FilterByDistance(float longitude, float latitude, float distance)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Workplace> IWorkplaceFilter.FilterByKeyword(string keyword)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Workplace> IWorkplaceFilter.Filter(string keyword, float longitude, float latitude, float distance)
-        {
-            throw new NotImplementedException();
+            return Math.Sqrt(Math.Pow(longitude - location.Longitude, 2) + Math.Pow(latitude - location.Latitude, 2)) <= distance;
         }
     }
 }
