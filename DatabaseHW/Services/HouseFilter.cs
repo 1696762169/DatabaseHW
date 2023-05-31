@@ -1,4 +1,5 @@
-﻿using DatabaseHW.Models;
+﻿using DatabaseHW.Data;
+using DatabaseHW.Models;
 
 namespace DatabaseHW.Services
 {
@@ -7,7 +8,13 @@ namespace DatabaseHW.Services
     /// </summary>
     public class HouseFilter :Interface.IHouseFilter
     {
-        public List<House> Filter(IEnumerable<Community> communities, HouseCondition condition)
+        private readonly DataContext m_Context;
+        public HouseFilter(DataContext context)
+        {
+            m_Context = context;
+        }
+
+        public List<House> Filter(Community community, HouseCondition condition)
         {
             throw new NotImplementedException();
         }

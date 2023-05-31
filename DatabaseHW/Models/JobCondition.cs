@@ -21,6 +21,24 @@ namespace DatabaseHW.Models
         public short Type { get; set; }              // 岗位分类（枚举值）
         [EnumDataType(typeof(AcademicType))]
         public byte Academic { get; set; }           // 学历最低要求（枚举值）
-    }
 
+        /// <summary>
+        /// 创建一个空的筛选条件 不会进行任何筛选
+        /// </summary>
+        /// <returns></returns>
+        public static JobCondition Empty()
+        {
+            return new JobCondition
+            {
+                SalaryMax = short.MaxValue,
+                SalaryMin = 0,
+                PeriodMax = byte.MaxValue,
+                PeriodMin = 0,
+                FreMax = byte.MaxValue,
+                FreMin = 0,
+                Type = short.MaxValue,
+                Academic = byte.MaxValue,
+            };
+        }
+    }
 }
