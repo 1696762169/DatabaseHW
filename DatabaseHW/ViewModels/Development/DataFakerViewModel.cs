@@ -1,4 +1,5 @@
-﻿using DatabaseHW.Models;
+﻿using System.Collections;
+using DatabaseHW.Models;
 namespace DatabaseHW.ViewModels.Development
 {
     /// <summary>
@@ -9,6 +10,7 @@ namespace DatabaseHW.ViewModels.Development
         public string SelectedType { get; set; } = nameof(Workplace);
         public int GenerateCount { get; set; }
         public int GetCount { get; set; }
+        public IList? GetResult { get; set; }
 
         public static List<string> Types { get; set; } = new()
         {

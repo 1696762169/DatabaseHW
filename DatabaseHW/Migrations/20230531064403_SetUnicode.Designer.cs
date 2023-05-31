@@ -4,6 +4,7 @@ using DatabaseHW.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseHW.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230531064403_SetUnicode")]
+    partial class SetUnicode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +180,7 @@ namespace DatabaseHW.Migrations
                         {
                             t.HasCheckConstraint("CK_House_ES", "[Entire] <> 0 OR [Share] <> 0");
 
-                            t.HasCheckConstraint("CK_House_TermMax", "[TermMax] >= [TermMin]");
+                            t.HasCheckConstraint("CK_House_TermMax", "[TermMax] > [TermMin]");
                         });
                 });
 
@@ -221,13 +224,13 @@ namespace DatabaseHW.Migrations
 
                     b.ToTable("HouseConditions", t =>
                         {
-                            t.HasCheckConstraint("CK_HouseCondition_AreaMax", "[AreaMax] >= [AreaMin]");
+                            t.HasCheckConstraint("CK_HouseCondition_AreaMax", "[AreaMax] > [AreaMin]");
 
                             t.HasCheckConstraint("CK_HouseCondition_ES", "[Entire] <> 0 OR [Share] <> 0");
 
-                            t.HasCheckConstraint("CK_HouseCondition_PriceMax", "[PriceMax] >= [PriceMin]");
+                            t.HasCheckConstraint("CK_HouseCondition_PriceMax", "[PriceMax] > [PriceMin]");
 
-                            t.HasCheckConstraint("CK_HouseCondition_TermMax", "[TermMax] >= [TermMin]");
+                            t.HasCheckConstraint("CK_HouseCondition_TermMax", "[TermMax] > [TermMin]");
                         });
                 });
 
@@ -293,11 +296,11 @@ namespace DatabaseHW.Migrations
                         {
                             t.HasCheckConstraint("CK_Job_Academic", "[Academic] IN (0,1,2,3,4,5)");
 
-                            t.HasCheckConstraint("CK_Job_FreMax", "[FreMax] >= [FreMin]");
+                            t.HasCheckConstraint("CK_Job_FreMax", "[FreMax] > [FreMin]");
 
-                            t.HasCheckConstraint("CK_Job_PeriodMax", "[PeriodMax] >= [PeriodMin]");
+                            t.HasCheckConstraint("CK_Job_PeriodMax", "[PeriodMax] > [PeriodMin]");
 
-                            t.HasCheckConstraint("CK_Job_SalaryMax", "[SalaryMax] >= [SalaryMin]");
+                            t.HasCheckConstraint("CK_Job_SalaryMax", "[SalaryMax] > [SalaryMin]");
 
                             t.HasCheckConstraint("CK_Job_Type", "[Type] IN (0,1,2,3,4,5)");
                         });
@@ -341,11 +344,11 @@ namespace DatabaseHW.Migrations
                         {
                             t.HasCheckConstraint("CK_JobCondition_Academic", "[Academic] IN (0,1,2,3,4,5)");
 
-                            t.HasCheckConstraint("CK_JobCondition_FreMax", "[FreMax] >= [FreMin]");
+                            t.HasCheckConstraint("CK_JobCondition_FreMax", "[FreMax] > [FreMin]");
 
-                            t.HasCheckConstraint("CK_JobCondition_PeriodMax", "[PeriodMax] >= [PeriodMin]");
+                            t.HasCheckConstraint("CK_JobCondition_PeriodMax", "[PeriodMax] > [PeriodMin]");
 
-                            t.HasCheckConstraint("CK_JobCondition_SalaryMax", "[SalaryMax] >= [SalaryMin]");
+                            t.HasCheckConstraint("CK_JobCondition_SalaryMax", "[SalaryMax] > [SalaryMin]");
 
                             t.HasCheckConstraint("CK_JobCondition_Type", "[Type] IN (0,1,2,3,4,5)");
                         });

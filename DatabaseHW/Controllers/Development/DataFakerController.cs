@@ -1,4 +1,5 @@
-﻿using DatabaseHW.Services.Interface;
+﻿using DatabaseHW.Models;
+using DatabaseHW.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using DatabaseHW.ViewModels.Development;
 
@@ -25,6 +26,7 @@ namespace DatabaseHW.Controllers.Development
         [HttpPost]
         public IActionResult GenerateData(DataFakerViewModel model)
         {
+            m_Generator.GenerateData(model.SelectedType, model.GenerateCount);
             TempData["message"] = $"创建了 {model.GenerateCount} 条 {model.SelectedType} 数据";
             return View(nameof(DataFaker), model);
         }
@@ -32,13 +34,40 @@ namespace DatabaseHW.Controllers.Development
         [HttpPost]
         public IActionResult GetAllData(DataFakerViewModel model)
         {
-            TempData["message"] = $"获取了 {model.GetCount} 条 {model.SelectedType} 数据";
+            model.GetResult = model.SelectedType switch
+            {
+                nameof(Workplace) => m_Generator.GetData<Workplace>(model.GetCount),
+                nameof(Community) => m_Generator.GetData<Community>(model.GetCount),
+                nameof(House) => m_Generator.GetData<House>(model.GetCount),
+                nameof(Job) => m_Generator.GetData<Job>(model.GetCount),
+                nameof(Company) => m_Generator.GetData<Company>(model.GetCount),
+                _ => throw new ArgumentException("未知的类型"),
+            };
+            TempData["message"] = $"获取了 {model.GetResult.Count} 条 {model.SelectedType} 数据";
             return View(nameof(DataFaker), model);
         }
 
         [HttpPost]
         public IActionResult RemoveAllData(DataFakerViewModel model)
         {
+            switch (model.SelectedType)
+            {
+            case nameof(Workplace):
+                m_Generator.RemoveAllData<Workplace>();
+                break;
+            case nameof(Community):
+                m_Generator.RemoveAllData<Community>();
+                break;
+            case nameof(House):
+                m_Generator.RemoveAllData<House>();
+                break;
+            case nameof(Job):
+                m_Generator.RemoveAllData<Job>();
+                break;
+            case nameof(Company):
+                m_Generator.RemoveAllData<Company>();
+                break;
+            }
             TempData["message"] = $"删除了 {model.SelectedType} 数据";
             return View(nameof(DataFaker), model);
         }

@@ -8,12 +8,12 @@
         /// <summary>
         /// 批量添加随机数据
         /// </summary>
-        public void GenerateData<T>(int count) where T : class, new();
+        public void GenerateData(string typeName, int count);
         /// <summary>
         /// 获取所有数据
         /// </summary>
         /// <param name="count">-1表示查看所有数据</param>
-        public List<T> GetAllData<T>(int count = -1) where T : class;
+        public List<T> GetData<T>(int count = -1) where T : class;
         /// <summary>
         /// 删除所有数据
         /// </summary>

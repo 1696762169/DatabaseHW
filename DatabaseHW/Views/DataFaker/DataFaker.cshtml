@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using DatabaseHW.ViewModels.Development
+@using System.Text
 @model DataFakerViewModel
 
 @{
@@ -41,21 +42,56 @@
 	<input type="hidden" name="GenerateCount" value="@Model.GenerateCount" />
 	<div class="form-group">
 		<p>
-			<label for="get-count">查看数量</label>
+			<label for="get-count">查询数量</label>
 		</p>
 		<p>
-			<input type="number" asp-for="GetCount" class="form-control" id="get-count">
+			<input type="number" asp-for="GetCount" class="form-control" id="get-count" max="100">
 		</p>
-		<button type="submit" class="btn btn-primary">查看数据</button>
+		<button type="submit" class="btn btn-primary">查询数据</button>
 	</div>
 </form>
-<hr/>
+<hr/> 
+
+@*显示操作结果*@
 @if (TempData["message"] != null)
 {
 	<div class="alert alert-success">
 		@TempData["message"]
 	</div>
 }
+
+@*显示查询结果*@
+@if (Model.GetResult != null)
+{
+	<div class="result">
+		<h3>数据结果:</h3>
+		<ul>
+			@{ int count = 0; }
+			@foreach (var item in Model.GetResult)
+			{
+				<li>
+					<div>@(++count)</div>
+					@foreach (var property in item.GetType().GetProperties())
+					{
+						var propertyType = property.PropertyType;
+						if (propertyType == typeof(int) ||
+						    propertyType == typeof(short) ||
+						    propertyType == typeof(byte) ||
+						    propertyType == typeof(float))
+						{
+							<div>@property.Name: @property.GetValue(item)</div>
+						}
+						if (propertyType == typeof(string))
+						{
+							<div>@property.Name: @(property.GetValue(item) ?? "无")</div>
+						}
+					}
+				</li>
+			}
+		</ul>
+	</div>
+}
+
 
 @section Scripts
 {

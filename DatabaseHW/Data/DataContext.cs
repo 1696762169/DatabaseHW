@@ -37,7 +37,7 @@ namespace DatabaseHW.Data
                 // 遍历所有属性
                 foreach (PropertyInfo entityProperty in entityType.GetProperties())
                 {
-                    SetNonUnicode(entityType, entityProperty, modelBuilder);
+                    //SetNonUnicode(entityType, entityProperty, modelBuilder);
                     SetCompareConstraint(entityType, entityProperty, modelBuilder);
                     SetEnumConstraint(entityType, entityProperty, modelBuilder);
                     SetFloat(entityType, entityProperty, modelBuilder);
@@ -75,7 +75,7 @@ namespace DatabaseHW.Data
                 return;
             // 设置比较大小约束
             modelBuilder.Entity(entityType).ToTable(t =>
-                t.HasCheckConstraint($"CK_{entityType.Name}_{entityProperty.Name}", $"[{entityProperty.Name}] > [{compareName}]"));
+                t.HasCheckConstraint($"CK_{entityType.Name}_{entityProperty.Name}", $"[{entityProperty.Name}] >= [{compareName}]"));
         }
 
         // 设置枚举约束
@@ -114,7 +114,7 @@ namespace DatabaseHW.Data
                 // 遍历所有属性
                 foreach (PropertyInfo entityProperty in entityType.GetProperties())
                 {
-                    SetNonUnicode(entityType, entityProperty, modelBuilder);
+                    //SetNonUnicode(entityType, entityProperty, modelBuilder);
                     SetCompareConstraint(entityType, entityProperty, modelBuilder);
                     SetEnumConstraint(entityType, entityProperty, modelBuilder);
                     SetFloat(entityType, entityProperty, modelBuilder);
