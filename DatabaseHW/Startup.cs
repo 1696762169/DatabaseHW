@@ -32,6 +32,12 @@ namespace DatabaseHW
             // 添加数据筛选器服务
             services.AddScoped<IWorkplaceFilter, PrimaryFilter>();
             services.AddScoped<ICommunityFilter, PrimaryFilter>();
+            services.AddScoped<IJobFilter, JobFilter>();
+            services.AddScoped<IHouseFilter, HouseFilter>();
+
+            // 添加用户数据操作服务
+            services.AddScoped<IRecordRepository, RecordRepository>();
+            services.AddScoped<IConditionRepository, ConditionRepository>();
 
             // 添加测试数据服务
             if (env.IsDevelopment())

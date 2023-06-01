@@ -24,6 +24,6 @@ namespace DatabaseHW.Services.Interface
         /// <summary>
         /// 获取一个用户的所有历史记录
         /// </summary>
-        public Record GetRecord(int accountId);
+        public List<Record> GetRecord(int accountId);
     }
 }
