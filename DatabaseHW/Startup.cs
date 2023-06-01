@@ -71,7 +71,8 @@ namespace DatabaseHW
             app.UseRouting();
 
             // 配置控制器路由映射
-            app.UseEndpoints(env.IsDevelopment() ? DataFakerRoute : ConfigureRoute);
+            //app.UseEndpoints(env.IsDevelopment() ? DataFakerRoute : ConfigureRoute);
+            app.UseEndpoints(ConfigureRoute);
         }
 
         // 配置路由

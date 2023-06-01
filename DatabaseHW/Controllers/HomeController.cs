@@ -21,12 +21,6 @@ namespace DatabaseHW.Controllers
             return View();  // 返回 Index 视图
         }
 
-        // Privacy 操作方法，处理对应的 Privacy 请求
-        public IActionResult Privacy()
-        {
-            return View();  // 返回 Privacy 视图
-        }
-
         // Error 操作方法，处理对应的 Error 请求
         // 使用 ResponseCache 特性设置缓存策略，禁止缓存此响应
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

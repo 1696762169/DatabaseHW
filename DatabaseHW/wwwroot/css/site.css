@@ -12,11 +12,20 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-body {
-  margin-bottom: 60px;
+/*主要内容新开一个层级，显示在地图之上*/
+main {
+    position: fixed;
+}
+
+/*地图占全屏*/
+#map-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
 }
