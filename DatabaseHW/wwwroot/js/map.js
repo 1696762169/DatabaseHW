@@ -9,9 +9,10 @@
         version: "2.0"                 // 指定要加载的 JS API 的版本
     }).then((aMap) => {
         const map = new aMap.Map("map-container", {
-            zoom: 12,   // 缩放级别
-            center: [113.26472, 23.10889]   // 中心点坐标
+            zoom: 16,   // 缩放级别
+            center: [113.356589, 23.168638]   // 中心点坐标
         });
+        addMarker(map, aMap, 2000);
     }).catch((e) => {
         console.error(e);  //加载错误提示
     });

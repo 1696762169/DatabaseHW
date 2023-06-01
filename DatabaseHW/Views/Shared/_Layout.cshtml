@@ -12,16 +12,18 @@
 @if (TempData["NoMap"] == null)
 {
 	<div id="map-container"></div>
-	<script src="https://webapi.amap.com/loader.js"></script>
-	<script src="~/js/map.js"></script>
 }
-<main style="position: fixed">
+<main class="container-fluid">
 	@RenderBody()
 </main>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
+@if (TempData["NoMap"] == null)
+{
+	<script src="https://webapi.amap.com/loader.js"></script>
+	<script src="~/js/map.js"></script>
+}
 </body>
 </html>
