@@ -76,7 +76,7 @@ namespace DatabaseHW.Services.Development
         { 
             return new Workplace
             {
-                WorkplaceId = m_Faker.UniqueIndex,
+                //WorkplaceId = m_Faker.UniqueIndex,
                 Name = m_Faker.Hacker.Adjective() + m_Faker.Hacker.Noun(),
                 Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
                 Longitude = (float)m_Faker.Address.Longitude(LONGITUDE_MIN, LONGITUDE_MAX),
@@ -87,7 +87,7 @@ namespace DatabaseHW.Services.Development
         {
             return new Community
             {
-                CommunityId = m_Faker.UniqueIndex,
+                //CommunityId = m_Faker.UniqueIndex,
                 Name = m_Faker.Hacker.Adjective() + m_Faker.Hacker.Noun(),
                 Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
                 Longitude = (float)m_Faker.Address.Longitude(LONGITUDE_MIN, LONGITUDE_MAX),
@@ -98,7 +98,7 @@ namespace DatabaseHW.Services.Development
         {
             House ret = new()
             {
-                HouseId = m_Faker.UniqueIndex,
+                //HouseId = m_Faker.UniqueIndex,
                 Title = m_Faker.Lorem.Sentence(5, 3),
                 Price = m_Faker.Random.Float(100.0f, 10000.0f),
                 Area = m_Faker.Random.Float(10.0f, 1000.0f),
@@ -116,7 +116,7 @@ namespace DatabaseHW.Services.Development
         {
             Job ret = new()
             {
-                JobId = m_Faker.UniqueIndex,
+                //JobId = m_Faker.UniqueIndex,
                 Name = m_Faker.Name.JobTitle(),
                 SalaryMax = m_Faker.Random.Short(100, 500),
                 PeriodMax = m_Faker.Random.Byte(3, 24),
@@ -137,7 +137,7 @@ namespace DatabaseHW.Services.Development
         {
             return new Company
             {
-                CompanyId = m_Faker.UniqueIndex,
+                //CompanyId = m_Faker.UniqueIndex,
                 Name = m_Faker.Company.CompanyName(),
                 Scale = (byte)m_Faker.PickRandom<ScaleType>(),
                 Financing = (byte)m_Faker.PickRandom<FinanceType>(),
