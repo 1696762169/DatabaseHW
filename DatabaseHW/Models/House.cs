@@ -19,7 +19,9 @@ namespace DatabaseHW.Models
         public float Area { get; set; }              // 房屋面积，单位为平方米
         public short TermMax { get; set; }           // 租期上限，单位为月，不可小于termMin
         public short TermMin { get; set; }           // 租期下限，单位为月，不可大于termMax
+        [Range(0, 1)]
         public byte Entire { get; set; }             // 是否可整租，不可与share同为0
+        [Range(0, 1)]
         public byte Share { get; set; }              // 是否可合租，不可与entire同为0
         [Url]
         [MaxLength(200)]
