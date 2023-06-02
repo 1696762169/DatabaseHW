@@ -1,8 +1,53 @@
-﻿@{
+﻿@using DatabaseHW.Models;
+@using DatabaseHW.ViewModels;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PrimarySearchViewModel
+@{
     ViewData["Title"] = "主页";
 }
 
-<div class="row"><div class="alert-danger" style="font-size: 30px">哼~哼~~啊~啊啊啊啊啊啊！！！</div></div>
+<form asp-controller="Primary" asp-action="Search">
+	@*设置查询类型*@
+	<div class="row mt-5">
+		<div class="offset-3 col-4">
+			<div class="input-group">
+				<label class="input-group-text" for="modelTypeSelection">搜索类型</label>
+				<select class="form-select" id="modelTypeSelection" asp-for="Type">
+					<option value="@nameof(Workplace)">工作</option>
+					<option value="@nameof(Community)">租房</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+@*设置查询关键字*@
+	<div class="row justify-content-center mt-3">
+		<div class="col-6">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="请输入搜索关键字..." asp-for="Key">
+				<button class="btn btn-primary" type="submit">搜索</button>
+			</div>
+		</div>
+	</div>
+
+	@*设置经纬度和查询范围*@
+	<input type="hidden" id="model-longitude" asp-for="Longitude"/>
+	<input type="hidden" id="model-latitude" asp-for="Latitude"/>
+	<input type="hidden" id="model-range" asp-for="Range"/>
+	<div class="row mt-3">
+		<div class="offset-3 col-3">
+			<div class="input-group">
+				<label class="input-group-text" id="center-label">点击地图可选择搜索位置</label>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="offset-3 col-3">
+			<div class="input-group" id="range-div"></div>
+		</div>
+	</div>
+
+</form>
 
 @section Scripts
 {

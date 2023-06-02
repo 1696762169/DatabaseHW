@@ -69,7 +69,7 @@ namespace DatabaseHW
             app.UseStaticFiles();
             // 使用路由中间件
             app.UseRouting();
-
+            
             // 配置控制器路由映射
             //app.UseEndpoints(env.IsDevelopment() ? DataFakerRoute : ConfigureRoute);
             app.UseEndpoints(ConfigureRoute);

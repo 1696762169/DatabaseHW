@@ -1,4 +1,5 @@
 ﻿using DatabaseHW.Models;
+using DatabaseHW.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -16,9 +17,10 @@ namespace DatabaseHW.Controllers
         }
 
         // Index 操作方法，处理对应的 Index 请求
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();  // 返回 Index 视图
+            return View(new PrimarySearchViewModel());  // 返回 Index 视图
         }
 
         // Error 操作方法，处理对应的 Error 请求

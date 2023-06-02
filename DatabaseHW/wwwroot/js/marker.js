@@ -5,7 +5,7 @@ const addMarker = (function () {
     let currentCircle = null;   // 当前表示范围的圆形
     let currentWindow = null;   // 当前信息窗口
 
-    return function addMarker(map, aMap, radiusInMeters) {
+    return function (map, aMap) {
         map.on("click", function (e) {
             // 清除先前的标记
             if (currentMaker != null) {
@@ -30,6 +30,12 @@ const addMarker = (function () {
             currentMaker = marker;
 
             // 添加新圆形并记录
+            let radiusInMeters;
+            if (document.getElementById("range-slider") == null) {
+                radiusInMeters = 1000;
+            } else {
+                radiusInMeters = document.getElementById("range-slider").value * 1000;
+            }
             const circle = new aMap.Circle({
                 center: e.lnglat,
                 radius: radiusInMeters,
@@ -55,6 +61,26 @@ const addMarker = (function () {
                     infoWindow.open(map, e.lnglat);
                     document.getElementById("marker-longitude").value = e.lnglat.getLng();
                     document.getElementById("marker-latitude").value = e.lnglat.getLat();
+                    // 将经纬度赋值给视图模型属性
+                    document.getElementById("model-longitude").value = e.lnglat.getLng();
+                    document.getElementById("model-latitude").value = e.lnglat.getLat();
+                    document.getElementById("center-label").innerText = `搜索中心经度：${e.lnglat.getLng()} 纬度：${e.lnglat.getLat()}`;
+                    if (document.getElementById("range-slider") == null) {
+                        document.getElementById("range-div").innerHTML = `
+                        <label class="input-group-text" for="modelTypeSelection" id="range-label">搜索范围：1km</label>
+                        <input type="range" class="form-range" id="range-slider" max="10.0" min="1.0" step="0.01"/>
+                    `;
+                        document.getElementById("range-slider").value = 1;
+                        // 设置搜索范围更改时的行为
+                        document.getElementById("range-slider").addEventListener("input", value => {
+                            currentCircle.setRadius(value.target.value * 1000);
+                            document.getElementById("range-label").innerText =
+                                `搜索范围：${document.getElementById("range-slider").value}km`;
+                            document.getElementById("model-range").value =
+                                document.getElementById("range-slider").value;
+                        });
+                    };
+                    
 
                     // 获取地理编码后的地址信息
                     aMap.plugin("AMap.Geocoder", function () {

@@ -15,6 +15,9 @@
 }
 <main class="container-fluid">
 	@RenderBody()
+	<div class="row" style="position: fixed">
+		@TempData["Message"]
+	</div>
 </main>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
