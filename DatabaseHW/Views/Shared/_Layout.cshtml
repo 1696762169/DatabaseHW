@@ -22,11 +22,15 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-@await RenderSectionAsync("Scripts", required: false)
 @if (TempData["NoMap"] == null)
 {
 	<script src="https://webapi.amap.com/loader.js"></script>
 	<script src="~/js/map.js"></script>
 }
+<script>
+	window.model = @Json.Serialize(Model);
+</script>
+@await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

@@ -1,11 +1,14 @@
 ﻿"use strict";
 
-const addMarker = (function () {
+window.addEventListener("onMapLoad", (() => {
     let currentMaker = null;    // 当前标记
     let currentCircle = null;   // 当前表示范围的圆形
     let currentWindow = null;   // 当前信息窗口
 
-    return function (map, aMap) {
+    return function () {
+        const map = window.map;
+        const aMap = window.aMap;
+        // 设置地图点击事件
         map.on("click", function (e) {
             // 清除先前的标记
             if (currentMaker != null) {
@@ -96,4 +99,4 @@ const addMarker = (function () {
                 });
         });
     };
-})();
+})());

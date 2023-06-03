@@ -1,4 +1,5 @@
-﻿using DatabaseHW.Services.Interface;
+﻿using DatabaseHW.Models;
+using DatabaseHW.Services.Interface;
 using DatabaseHW.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,24 +25,32 @@ namespace DatabaseHW.Controllers
             // 验证数据是否正确
             if (string.IsNullOrEmpty(model.Key) && (model.Longitude >= float.MaxValue || model.Latitude >= float.MaxValue || model.Range <= 0))
                 return Redirect("/");
-            Console.WriteLine($"{model.Type} {model.Key} {model.Longitude} {model.Latitude} {model.Range}");
-	        return model.Type switch
-            {
-                nameof(Workplace) => RedirectToAction(nameof(Workplace), model),
-                nameof(Community) => RedirectToAction(nameof(Community), model),
-                _                 => Redirect("/")
-			};
+            return View(model);
         }
 
         [HttpGet]
-        public IActionResult Workplace(PrimarySearchViewModel model)
+        public IActionResult GetPrimaryList([FromQuery] PrimarySearchViewModel model)
         {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult Community(PrimarySearchViewModel model)
-        {
-            return View();
+            Console.WriteLine($"{model.Type} {model.Key} {model.Longitude} {model.Latitude} {model.Range}");
+            var temp = m_WorkplaceFilter.FilterByDistance(model.Longitude, model.Latitude, model.Range);
+            var temp1 = Json(temp);
+
+			return model.Type switch
+            {
+	            nameof(Workplace) when model.Key == null => 
+		            Json(m_WorkplaceFilter.FilterByDistance(model.Longitude, model.Latitude, model.Range)),
+	            nameof(Workplace) when model.Longitude >= float.MaxValue || model.Latitude >= float.MaxValue || model.Range <= 0 => 
+		            Json(m_WorkplaceFilter.FilterByKeyword(model.Key)),
+	            nameof(Workplace) => Json(m_WorkplaceFilter.Filter(model.Key, model.Longitude, model.Latitude, model.Range)),
+	            
+	            nameof(Community) when model.Key == null => 
+		            Json(m_CommunityFilter.FilterByDistance(model.Longitude, model.Latitude, model.Range)),
+	            nameof(Community) when model.Longitude >= float.MaxValue || model.Latitude >= float.MaxValue || model.Range <= 0 => 
+		            Json(m_CommunityFilter.FilterByKeyword(model.Key)),
+	            nameof(Community) => Json(m_CommunityFilter.Filter(model.Key, model.Longitude, model.Latitude, model.Range)),
+	            
+	            _ => throw new ArgumentException($"一级查询类型有误：{model.Type}")
+            };
         }
     }
 }

@@ -59,8 +59,7 @@ namespace DatabaseHW
             }
             else
             {
-                // 开发环境下使用详细的错误信息页面
-                app.UseDeveloperExceptionPage();
+	            app.UseDeveloperExceptionPage();
             }
 
             // 将HTTP请求重定向到HTTPS
@@ -69,10 +68,23 @@ namespace DatabaseHW
             app.UseStaticFiles();
             // 使用路由中间件
             app.UseRouting();
-            
-            // 配置控制器路由映射
-            //app.UseEndpoints(env.IsDevelopment() ? DataFakerRoute : ConfigureRoute);
-            app.UseEndpoints(ConfigureRoute);
+
+            //app.Use(async (context, next) =>
+            //{
+	           // try
+	           // {
+		          //  await next();
+	           // }
+	           // catch (Exception e)
+	           // {
+            //        string message = $"出错信息：{e.Message}\n出错资源：{e.Source}\n堆栈信息：{e.StackTrace}";
+            //        context.Response.Redirect($"Home/Error?message={5647645}");
+	           // }
+            //});
+
+			// 配置控制器路由映射
+			//app.UseEndpoints(env.IsDevelopment() ? DataFakerRoute : ConfigureRoute);
+			app.UseEndpoints(ConfigureRoute);
         }
 
         // 配置路由
