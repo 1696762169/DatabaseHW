@@ -14,6 +14,6 @@ namespace DatabaseHW.ViewModels
 
         public float Longitude { get; set; } = float.MaxValue;    // 经度
         public float Latitude { get; set; } = float.MaxValue;     // 纬度
-		public float Range { get; set; } = 1;    // 筛选范围
+		public float Range { get; set; } = -1;    // 筛选范围
 	}
 }
