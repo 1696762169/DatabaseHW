@@ -21,6 +21,11 @@ namespace DatabaseHW.Controllers
 		{
 			return PartialView(nameof(SaveJobCondition), m_ConditionRepository.GetJobCondition(Account.ONLY_ONE));
 		}
+		[HttpGet]
+		public IActionResult GetHouseCondition()
+		{
+			return PartialView(nameof(SaveHouseCondition), m_ConditionRepository.GetHouseCondition(Account.ONLY_ONE));
+		}
 		[HttpPost]
 		public IActionResult SaveJobCondition([FromForm] JobCondition condition)
 		{
@@ -35,10 +40,16 @@ namespace DatabaseHW.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult SaveHouseCondition(HouseCondition condition)
+		public IActionResult SaveHouseCondition([FromForm] HouseCondition condition)
 		{
-			m_ConditionRepository.UpdateHouseCondition(condition);
-			return Accepted();
+			try
+			{
+				m_ConditionRepository.UpdateHouseCondition(condition);
+			}
+			catch (DbUpdateException)
+			{
+			}
+			return PartialView(condition);
 		}
 	}
 }

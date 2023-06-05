@@ -4,13 +4,26 @@
 	ViewData["Title"] = "一级搜索结果";
 }
 
-<div class="row justify-content-center mt-5">
-	<div class="col-3"><vc:house-condition-view-components></vc:house-condition-view-components></div>
-</div>
-
+<main class="container offset-3 col-6">
+	<div class="row justify-content-center mt-5">
+		<div class="col">
+			<div class="text-center">
+				<button type="button" class="px-3 py-1 me-4 btn-primary rounded-3" id="job-condition-btn">设置岗位筛选条件</button>
+			</div>
+			<div class="bg-light p-4 rounded-bottom" id="job-condition-container">@Url.Action("GetJobCondition", "Condition")</div>
+		</div>
+		<div class="col">
+			<div class="text-center">
+				<button type="button" class="px-3 py-1 ms-4 btn-primary rounded-3" id="house-condition-btn">设置租房筛选条件</button>
+			</div>
+			<div class="bg-light p-4 rounded-bottom" id="house-condition-container">@Url.Action("GetHouseCondition", "Condition")</div>
+		</div>
+	</div>
+</main>
 @*<input type="hidden" id="model" value="@Json.Serialize(Model)"/>*@
 
 @section Scripts
 {
 	<script src="~/js/primary.js"></script>
+	<script src="/js/condition.js"></script>
 }

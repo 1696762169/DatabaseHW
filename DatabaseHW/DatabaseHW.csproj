@@ -9,15 +9,19 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\map.js" />
+    <Content Remove="wwwroot\js\ulimitedToggle.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Condition\SaveHouseCondition.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Condition\SaveJobCondition.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\js\map.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\ulimitedToggle.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\js\map.js" />
+    <None Include="wwwroot\js\ulimitedToggle.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +49,10 @@
 
   <ItemGroup>
     <Folder Include="Pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Condition\SaveHouseCondition.cshtml" />
   </ItemGroup>
 
 </Project>

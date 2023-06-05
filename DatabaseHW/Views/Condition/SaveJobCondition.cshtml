@@ -121,26 +121,8 @@
 	<button type="submit" class="btn btn-primary">保存</button>
 </form>
 
+<script src="~/js/ulimitedToggle.js"></script>
 <script>
-	function initUnlimited(valueId, toggleId, unlimitedValue) {
-		const valueInput = document.getElementById(valueId);
-		const toggleCheckbox = document.getElementById(toggleId);
-		if (valueInput.value === unlimitedValue.toString()) {
-			toggleCheckbox.checked = true;
-			toggleUnlimited(valueId, toggleId, unlimitedValue);
-		}
-	}
-	function toggleUnlimited(valueId, toggleId, unlimitedValue, defaultValue) {
-		const valueInput = document.getElementById(valueId);
-		const toggleCheckbox = document.getElementById(toggleId);
-		if (toggleCheckbox.checked) {
-			valueInput.disabled = true;
-			valueInput.value = unlimitedValue;
-		} else {
-			valueInput.disabled = false;
-			valueInput.value = defaultValue;
-		}
-	}
 	@{
 		(string, int, int)[] tuples = new[]
 		{
