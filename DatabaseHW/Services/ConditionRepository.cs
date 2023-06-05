@@ -17,7 +17,7 @@ namespace DatabaseHW.Services
 
         public HouseCondition GetHouseCondition(int accountId)
         {
-            Account account = m_Context.Accounts.Find()
+            Account account = m_Context.Accounts.Find(accountId)
                               ?? throw new ArgumentException($"ID为 {accountId} 的用户不存在");
             return m_Context.HouseConditions.Find(account.HouseConId)
                    ?? throw new ArgumentException($"ID为 {accountId} 的用户没有出租房筛选条件");
@@ -30,7 +30,7 @@ namespace DatabaseHW.Services
 
         public JobCondition GetJobCondition(int accountId)
         {
-            Account account = m_Context.Accounts.Find()
+            Account account = m_Context.Accounts.Find(accountId)
                               ?? throw new ArgumentException($"ID为 {accountId} 的用户不存在");
             return m_Context.JobConditions.Find(account.JobConId)
                    ?? throw new ArgumentException($"ID为 {accountId} 的用户没有岗位筛选条件");

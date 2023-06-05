@@ -20,6 +20,8 @@ namespace DatabaseHW.Models
         public int JobConId { get; set; }            // 岗位筛选条件，参照JobCondition表的jobConId
         public JobCondition JobCon { get; set; } = null!; // 岗位筛选条件
         public List<Record> Records { get; set; } = new(); // 导航属性，指向历史记录
+
+        public const int ONLY_ONE = 1;
     }
 
 }

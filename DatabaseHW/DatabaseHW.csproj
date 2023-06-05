@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Condition\SaveJobCondition.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\js\map.js" />
   </ItemGroup>
 
@@ -36,6 +37,10 @@
 
   <ItemGroup>
     <Using Include="Microsoft.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Condition\SaveJobCondition.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

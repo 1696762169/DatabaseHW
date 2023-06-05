@@ -1,0 +1,27 @@
+﻿@model DatabaseHW.Models.HouseCondition
+
+<h1>房源搜索条件</h1>
+
+<div>
+	<p><strong>价格范围：</strong></p>
+	<p>最低价格：@Model.PriceMin</p>
+	<p>最高价格：@Model.PriceMax</p>
+</div>
+
+<div>
+	<p><strong>租期范围：</strong></p>
+	<p>最低租期：@Model.TermMin</p>
+	<p>最高租期：@Model.TermMax</p>
+</div>
+
+<div>
+	<p><strong>面积范围：</strong></p>
+	<p>最低面积：@Model.AreaMin</p>
+	<p>最高面积：@Model.AreaMax</p>
+</div>
+
+<div>
+	<p><strong>整租/合租：</strong></p>
+	<p>整租：@Model.Entire</p>
+	<p>合租：@Model.Share</p>
+</div>

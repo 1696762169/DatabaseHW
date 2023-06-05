@@ -21,9 +21,7 @@ namespace DatabaseHW.Models
         public float AreaMax { get; set; }           // 面积最大值，单位为平方米，不可小于areaMin
         [Precision(6, 2)]
         public float AreaMin { get; set; }           // 面积最小值，单位为平方米，不可大于areaMax
-        [Range(0, 1)]
         public byte Entire { get; set; }             // 是否接受整租，不可与share同为0
-        [Range(0, 1)]
         public byte Share { get; set; }              // 是否接受合租，不可与entire同为0
 
         /// <summary>
@@ -33,12 +31,12 @@ namespace DatabaseHW.Models
         {
             return new HouseCondition
             {
-                PriceMax = float.MaxValue,
-                PriceMin = 0,
+                PriceMax = -1,
+                PriceMin = -1,
                 TermMax = short.MaxValue,
                 TermMin = 0,
-                AreaMax = float.MaxValue,
-                AreaMin = 0,
+                AreaMax = -1,
+                AreaMin = -1,
                 Entire = byte.MaxValue,
                 Share = byte.MaxValue,
             };

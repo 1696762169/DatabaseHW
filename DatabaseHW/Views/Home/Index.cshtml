@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	
-@*设置查询关键字*@
+	@*设置查询关键字*@
 	<div class="row justify-content-center mt-3">
 		<div class="col-6">
 			<div class="input-group">
@@ -48,8 +48,12 @@
 	</div>
 
 </form>
-
+<div class="row justify-content-center mt-5">
+	<div class="col"><vc:house-condition-view-components></vc:house-condition-view-components></div>
+	<div class="col bg-light p-4 rounded-bottom" id="job-condition-container">@Url.Action("GetJobCondition", "Condition")</div>
+</div>
 @section Scripts
 {
 	<script src="js/marker.js"></script>
+	<script src="js/condition.js"></script>
 }

@@ -18,9 +18,9 @@ namespace DatabaseHW.Services
         {
             // 首先查找工作地点中包含的岗位 排除大部分岗位
             IEnumerable<Job> temp =  m_Context.Jobs.Where(job => job.WorkplaceId == workplace.WorkplaceId);
-            if (condition.Type != short.MaxValue)    // 按岗位类型筛选
+            if (condition.Type != 0)    // 按岗位类型筛选
                 temp = temp.Where(job => job.Type == condition.Type);
-            if (condition.Academic != byte.MaxValue)    // 按学历要求筛选
+            if (condition.Academic != 0)    // 按学历要求筛选
                 temp = temp.Where(job => job.Academic == condition.Academic);
 
             if (condition.SalaryMax != short.MaxValue)    // 按最高薪资筛选
