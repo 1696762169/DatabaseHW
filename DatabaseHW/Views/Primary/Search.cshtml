@@ -4,8 +4,9 @@
 	ViewData["Title"] = "一级搜索结果";
 }
 
-<main class="container offset-3 col-6">
-	<div class="row justify-content-center mt-5">
+<div class="container col-3 mt-3" id="job-container" style="position: fixed"></div>
+<div class="container offset-3 col-6 mt-5" id="condition-container" style="position: fixed">
+	<div class="row justify-content-center">
 		<div class="col">
 			<div class="text-center">
 				<button type="button" class="px-3 py-1 me-4 btn-primary rounded-3" id="job-condition-btn">设置岗位筛选条件</button>
@@ -19,11 +20,11 @@
 			<div class="bg-light p-4 rounded-bottom" id="house-condition-container">@Url.Action("GetHouseCondition", "Condition")</div>
 		</div>
 	</div>
-</main>
-@*<input type="hidden" id="model" value="@Json.Serialize(Model)"/>*@
+</div>
+<div class="container offset-9 col-3 mt-3" id="house-container" style="position: fixed"></div>
 
 @section Scripts
 {
-	<script src="~/js/primary.js"></script>
-	<script src="/js/condition.js"></script>
+	<script src="~/js/search.js"></script>
+	<script src="~/js/condition.js"></script>
 }

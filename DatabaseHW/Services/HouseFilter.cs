@@ -14,10 +14,10 @@ namespace DatabaseHW.Services
             m_Context = context;
         }
 
-        public List<House> Filter(Community community, HouseCondition condition)
+        public List<House> Filter(int communityId, HouseCondition condition)
         {
             // 首先查找小区中包含的出租房 排除大部分出租房
-            IEnumerable<House> temp = m_Context.Houses.Where(house => house.CommunityId == community.CommunityId);
+            IEnumerable<House> temp = m_Context.Houses.Where(house => house.CommunityId == communityId);
             if (condition.PriceMax > 0)   // 按最高月租价格筛选
                 temp = temp.Where(house => house.Price <= condition.PriceMax);
             if (condition.PriceMin > 0)    // 按最低月租价格筛选

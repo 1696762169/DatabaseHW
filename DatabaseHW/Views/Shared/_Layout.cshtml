@@ -9,18 +9,18 @@
 	</head>
 <body>
 @*默认放置地图作为背景*@
-@if (TempData["NoMap"] == null)
-{
-	<div id="map-container"></div>
-}
-
-@RenderBody()
-<div class="container">
-	<div class="row" style="position: fixed">
-		@TempData["Message"]
+<main style="width: 100%">
+	@if (TempData["NoMap"] == null)
+	{
+		<div id="map-container"></div>
+	}
+	@RenderBody()
+	<div class="container">
+		<div class="row" style="position: fixed">
+			@TempData["Message"]
+		</div>
 	</div>
-</div>
-
+</main>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

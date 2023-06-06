@@ -14,10 +14,10 @@ namespace DatabaseHW.Services
             m_Context = context;
         }
 
-        public List<Job> Filter(Workplace workplace, JobCondition condition)
+        public List<Job> Filter(int workplaceId, JobCondition condition)
         {
             // 首先查找工作地点中包含的岗位 排除大部分岗位
-            IEnumerable<Job> temp =  m_Context.Jobs.Where(job => job.WorkplaceId == workplace.WorkplaceId);
+            IEnumerable<Job> temp =  m_Context.Jobs.Where(job => job.WorkplaceId == workplaceId);
             if (condition.Type != 0)    // 按岗位类型筛选
                 temp = temp.Where(job => job.Type == condition.Type);
             if (condition.Academic != 0)    // 按学历要求筛选

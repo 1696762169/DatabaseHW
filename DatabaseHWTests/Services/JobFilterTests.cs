@@ -17,7 +17,7 @@ namespace DatabaseHW.Services.Tests
 
             // 创建 JobFilter 实例，并调用 Filter 方法
             JobFilter jobFilter = new(context);
-            List<Job> jobs = jobFilter.Filter(workplace, condition);
+            List<Job> jobs = jobFilter.Filter(workplace.WorkplaceId, condition);
         }
     }
 }
