@@ -26,6 +26,22 @@ namespace DatabaseHW.Controllers
 		{
 			return PartialView(nameof(SaveHouseCondition), m_ConditionRepository.GetHouseCondition(Account.ONLY_ONE));
 		}
+
+		[HttpGet]
+		public IActionResult GetJobConditionJson()
+		{
+			JobCondition temp = m_ConditionRepository.GetJobCondition(Account.ONLY_ONE);
+			temp.Account = null;
+			return Json(temp);
+		}
+		[HttpGet]
+		public IActionResult GetHouseConditionJson()
+		{
+			HouseCondition temp = m_ConditionRepository.GetHouseCondition(Account.ONLY_ONE);
+			temp.Account = null;
+			return Json(temp);
+		}
+
 		[HttpPost]
 		public IActionResult SaveJobCondition([FromForm] JobCondition condition)
 		{

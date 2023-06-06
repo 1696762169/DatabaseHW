@@ -20,10 +20,10 @@ namespace DatabaseHW.Services.Development
         private List<int> m_Communities = new();
         private List<int> m_Companies = new();
 
-        private const float LONGITUDE_MAX = 114.05f;
-        private const float LONGITUDE_MIN = 112.95f;
-        private const float LATITUDE_MAX = 23.93f;
-        private const float LATITUDE_MIN = 22.43f;
+        private const float LONGITUDE_MAX = 113.45f;
+        private const float LONGITUDE_MIN = 113.24f;
+        private const float LATITUDE_MAX = 23.26f;
+        private const float LATITUDE_MIN = 23.07f;
 
         private static readonly List<string> _AllDistricts = new()
         {
@@ -76,8 +76,7 @@ namespace DatabaseHW.Services.Development
         { 
             return new Workplace
             {
-                //WorkplaceId = m_Faker.UniqueIndex,
-                Name = m_Faker.Hacker.Adjective() + m_Faker.Hacker.Noun(),
+                Name = m_Faker.Name.WorkplaceName(),
                 Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
                 Longitude = (float)m_Faker.Address.Longitude(LONGITUDE_MIN, LONGITUDE_MAX),
                 Latitude = (float)m_Faker.Address.Latitude(LATITUDE_MIN, LATITUDE_MAX),
@@ -87,9 +86,8 @@ namespace DatabaseHW.Services.Development
         {
             return new Community
             {
-                //CommunityId = m_Faker.UniqueIndex,
-                Name = m_Faker.Hacker.Adjective() + m_Faker.Hacker.Noun(),
-                Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
+                Name = m_Faker.Name.CommunityName(),
+				Address = $"广州市{m_Faker.PickRandom(_AllDistricts)}{m_Faker.Address.StreetAddress()}",
                 Longitude = (float)m_Faker.Address.Longitude(LONGITUDE_MIN, LONGITUDE_MAX),
                 Latitude = (float)m_Faker.Address.Latitude(LATITUDE_MIN, LATITUDE_MAX),
             };
@@ -98,7 +96,6 @@ namespace DatabaseHW.Services.Development
         {
             House ret = new()
             {
-                //HouseId = m_Faker.UniqueIndex,
                 Title = m_Faker.Lorem.Sentence(5, 3),
                 Price = m_Faker.Random.Float(100.0f, 10000.0f),
                 Area = m_Faker.Random.Float(10.0f, 1000.0f),
@@ -116,7 +113,6 @@ namespace DatabaseHW.Services.Development
         {
             Job ret = new()
             {
-                //JobId = m_Faker.UniqueIndex,
                 Name = m_Faker.Name.JobTitle(),
                 SalaryMax = m_Faker.Random.Short(100, 500),
                 PeriodMax = m_Faker.Random.Byte(3, 24),
@@ -137,8 +133,7 @@ namespace DatabaseHW.Services.Development
         {
             return new Company
             {
-                //CompanyId = m_Faker.UniqueIndex,
-                Name = m_Faker.Company.CompanyName(),
+                Name = m_Faker.Name.CompanyName(),
                 Scale = (byte)m_Faker.PickRandom<ScaleType>(),
                 Financing = (byte)m_Faker.PickRandom<FinanceType>(),
                 Introduction = m_Faker.Lorem.Paragraph(),

@@ -16,14 +16,27 @@ namespace DatabaseHW.Controllers
 		}
 
 		// 查询岗位
-		public IActionResult GetJobList([FromBody] int id, [FromBody] JobCondition condition)
+		[HttpPost]
+		public IActionResult GetJobList([FromBody] JobListRequestModel model)
 		{
-			return Json(m_JobFilter.Filter(id, condition));
+			return Json(m_JobFilter.Filter(model.Id, model.Condition));
 		}
 		// 查询房屋
-		public IActionResult GetHouseList([FromBody] int id, [FromBody] HouseCondition condition)
+		[HttpPost]
+		public IActionResult GetHouseList([FromBody] HouseListRequestModel model)
 		{
-			return Json(m_HouseFilter.Filter(id, condition));
+			return Json(m_HouseFilter.Filter(model.Id, model.Condition));
+		}
+
+		public class JobListRequestModel
+		{
+			public int Id { get; set; }
+			public JobCondition Condition { get; set; } = null!;
+		}
+		public class HouseListRequestModel
+		{
+			public int Id { get; set; }
+			public HouseCondition Condition { get; set; } = null!;
 		}
 	}
 }

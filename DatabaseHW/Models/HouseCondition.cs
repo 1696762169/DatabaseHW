@@ -10,7 +10,7 @@ namespace DatabaseHW.Models
     {
         [Key]
         public int HouseConId { get; set; }          // 筛选条件ID（主键，自增）
-        public Account Account { get; set; } = null!; // 导航属性，指向所属账户
+        public Account? Account { get; set; } // 导航属性，指向所属账户
         [Precision(8, 2)]
         public float PriceMax { get; set; }          // 月租价格最大值，单位为元，不可小于priceMin
         [Precision(8, 2)]

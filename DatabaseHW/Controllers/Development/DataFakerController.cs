@@ -20,6 +20,7 @@ namespace DatabaseHW.Controllers.Development
         [HttpGet]
         public IActionResult DataFaker()
         {
+	        TempData["NoMap"] = true;
             return View(new DataFakerViewModel());
         }
 
@@ -29,6 +30,7 @@ namespace DatabaseHW.Controllers.Development
             int timer = Environment.TickCount;
             m_Generator.GenerateData(model.SelectedType, model.GenerateCount);
             TempData["message"] = $"创建了 {model.GenerateCount} 条 {model.SelectedType} 数据\n用时 {(Environment.TickCount - timer) / 1000.0f:F2} 秒";
+	        TempData["NoMap"] = true;
             return View(nameof(DataFaker), model);
         }
 
@@ -47,6 +49,7 @@ namespace DatabaseHW.Controllers.Development
                 _ => throw new ArgumentException("未知的类型"),
             };
             TempData["message"] = $"获取了 {model.GetResult.Count} 条 {model.SelectedType} 数据\n用时 {(Environment.TickCount - timer) / 1000.0f:F2} 秒";
+	        TempData["NoMap"] = true;
             return View(nameof(DataFaker), model);
         }
 
@@ -73,6 +76,7 @@ namespace DatabaseHW.Controllers.Development
                 break;
             }
             TempData["message"] = $"删除了 {model.SelectedType} 数据\n用时 {(Environment.TickCount - timer) / 1000.0f:F2} 秒";
+	        TempData["NoMap"] = true;
             return View(nameof(DataFaker), model);
         }
     }

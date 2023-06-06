@@ -10,7 +10,7 @@ namespace DatabaseHW.Models
     {
         [Key]
         public int JobConId { get; set; }            // 筛选条件ID（主键，自增）
-        public Account Account { get; set; } = null!; // 导航属性，指向所属账户
+        public Account? Account { get; set; } // 导航属性，指向所属账户
         public short SalaryMax { get; set; } = short.MaxValue;         // 实习日薪上限，单位为元，不可小于salaryMin
 		public short SalaryMin { get; set; }         // 实习日薪下限，单位为元，不可大于salaryMax
         public byte PeriodMax { get; set; } = byte.MaxValue;          // 实习时长上限，单位为月，不可小于periodMin
