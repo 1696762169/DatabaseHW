@@ -10,7 +10,7 @@ namespace DatabaseHW.Models
     {
         public int RecordId { get; set; }            // 记录ID（主键，自增）
         [MaxLength(200)]
-        public string Key { get; set; } = null!;     // 查询关键字
+        public string? Key { get; set; }     // 查询关键字
         [Precision(10, 6)]
         public float Longitude { get; set; }         // 经度
         [Precision(10, 6)]

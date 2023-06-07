@@ -39,6 +39,9 @@ namespace DatabaseHW
             services.AddScoped<IRecordRepository, RecordRepository>();
             services.AddScoped<IConditionRepository, ConditionRepository>();
 
+            // 添加其它数据服务
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+
             // 添加测试数据服务
             if (env.IsDevelopment())
             {

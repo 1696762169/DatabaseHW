@@ -12,11 +12,13 @@ namespace DatabaseHW.Controllers
     {
         private readonly IWorkplaceFilter m_WorkplaceFilter;
         private readonly ICommunityFilter m_CommunityFilter;
+        private readonly IRecordRepository m_RecordRepository;
 
-        public PrimaryController(IWorkplaceFilter workplaceFilter, ICommunityFilter communityFilter)
+        public PrimaryController(IWorkplaceFilter workplaceFilter, ICommunityFilter communityFilter, IRecordRepository recordRepository)
         {
             m_WorkplaceFilter = workplaceFilter;
             m_CommunityFilter = communityFilter;
+            m_RecordRepository = recordRepository;
         }
 
         [HttpPost]
@@ -25,6 +27,15 @@ namespace DatabaseHW.Controllers
             // 验证数据是否正确
             if (string.IsNullOrEmpty(model.Key) && (model.Longitude >= float.MaxValue || model.Latitude >= float.MaxValue || model.Range <= 0))
                 return Redirect("/");
+            
+            // 记录历史记录
+	        m_RecordRepository.AddRecord(new Record
+	        {
+                Key = model.Key,
+                Longitude = model.Longitude,
+                Latitude = model.Latitude,
+                ApplyTime = DateTime.Now,
+	        }, Account.ONLY_ONE);
             return View(model);
         }
 

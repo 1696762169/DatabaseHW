@@ -124,6 +124,10 @@ function setList(location, name, showListFunc) {
     const Name = name.charAt(0).toUpperCase() + name.slice(1);
     // 清空列表
     container.removeClass("bg-light").empty();
+    // 清空公司信息
+    if (name === "job") {
+        $("#company-container").empty();
+    }
     if (location == null) {
         return;
     }
@@ -141,6 +145,10 @@ function setList(location, name, showListFunc) {
                     contentType: "application/json",
                     data: JSON.stringify({ id: locationId, condition: condition }),
                     success: (data) => {
+                        if (data.length === 0) {
+                            container.append($("<p>").text("没有搜索到合适的结果\n请调整筛选条件后重试"));
+                            return;
+                        }
                         const list = $("<div>").addClass("list-group");
                         showListFunc(data, list);
 
@@ -170,7 +178,8 @@ function setLocationCard(location) {
     const locationElement = $("<p>").addClass("card-text").text(`经度: ${location.longitude}，纬度: ${location.latitude}`);
     locationBody.append(locationElement);
 
-
+    const tipsElement = $("<p>").addClass("card-text").text(`点击列表中卡片可查看详细信息`);
+    locationBody.append(tipsElement);
 
     locationItem.append(locationBody);
     return locationItem;
@@ -217,12 +226,37 @@ function setJobList(jobs, list) {
         const academicElement = $("<p>").addClass("card-text").text(`学历要求: ${academicText}`);
         cardBody.append(academicElement);
 
+        // 岗位详细信息
+        showDetails(cardBody, job.description);
+        // 公司信息
+        const companyButton = $("<button>").addClass("btn btn-success btn-sm ms-3").text("查看公司信息");
+        companyButton.on("click", () => showCompanyInfo(job.companyId));
+        cardBody.append(companyButton);
+
         card.append(cardBody);
         item.append(card);
         list.append(item);
     });
 }
 
+// 显示详细信息
+function showDetails(cardBody, description) {
+    // 详细信息文本
+    const detailsElement = $("<p>").addClass("card-text details").hide();
+    cardBody.append(detailsElement);
+
+    // 展开/收起按钮
+    const toggleButton = $("<button>").addClass("btn btn-primary btn-sm").text("展开/收起详细信息");
+    cardBody.append(toggleButton);
+
+    // 按钮点击事件
+    toggleButton.on("click", () => {
+        if (detailsElement.text().trim().length === 0) {
+            detailsElement.text(`详细信息：\n${description}`);
+        }
+        detailsElement.slideToggle();
+    });
+}
 // 获取岗位分类文本
 function getJobTypeText(jobType) {
     switch (jobType) {
@@ -240,7 +274,6 @@ function getJobTypeText(jobType) {
             return "其它";
     }
 }
-
 // 获取学历要求文本
 function getAcademicTypeText(academicType) {
     switch (academicType) {
@@ -304,4 +337,76 @@ function setHouseList(houses, list) {
         item.append(card);
         list.append(item);
     });
+}
+
+// 显示公司信息
+function showCompanyInfo(companyId) {
+    // 查询公司信息
+    $.getJSON("/Secondary/GetCompany",
+        { companyId: companyId },
+        (company) => {
+            const container = $("#company-container");
+
+            // 清空容器内容
+            container.empty();
+            const card = $("<div>").addClass("card");
+            const cardBody = $("<div>").addClass("card-body");
+
+            // 公司名称
+            const nameElement = $("<h3>").addClass("card-title").text(company.name);
+            cardBody.append(nameElement);
+
+            // 公司人员规模
+            const scaleText = getScaleTypeText(company.scale);
+            const scaleElement = $("<p>").addClass("card-text").text(`公司人员规模: ${scaleText}`);
+            cardBody.append(scaleElement);
+
+            // 公司融资情况
+            const financingText = getFinanceTypeText(company.financing);
+            const financingElement = $("<p>").addClass("card-text").text(`公司融资情况: ${financingText}`);
+            cardBody.append(financingElement);
+
+            // 公司介绍
+            const introElement = $("<p>").addClass("card-text").text(`公司介绍: ${company.introduction}`);
+
+            cardBody.append(introElement);
+            card.append(cardBody);
+            container.append(card);
+        });
+}
+// 获取公司人员规模的文本
+function getScaleTypeText(scale) {
+    switch (scale) {
+    case 0:
+        return "初创/小型公司，100人以下";
+    case 1:
+        return "中等规模公司，100~999人";
+    case 2:
+        return "大型公司，1000~9999人";
+    case 3:
+        return "行业巨头，10000人以上";
+    default:
+        return "未知";
+    }
+}
+// 获取公司融资情况的文本
+function getFinanceTypeText(financing) {
+    switch (financing) {
+    case 0:
+        return "未获得融资";
+    case 1:
+        return "天使轮融资";
+    case 2:
+        return "A轮融资";
+    case 3:
+        return "B轮融资";
+    case 4:
+        return "C轮融资";
+    case 5:
+        return "D轮及以上融资";
+    case 6:
+        return "上市公司";
+    default:
+        return "未知";
+    }
 }

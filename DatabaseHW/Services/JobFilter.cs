@@ -21,7 +21,7 @@ namespace DatabaseHW.Services
             if (condition.Type != 0)    // 按岗位类型筛选
                 temp = temp.Where(job => job.Type == condition.Type);
             if (condition.Academic != 0)    // 按学历要求筛选
-                temp = temp.Where(job => job.Academic == condition.Academic);
+                temp = temp.Where(job => job.Academic <= condition.Academic);
 
             if (condition.SalaryMax != short.MaxValue)    // 按最高薪资筛选
                 temp = temp.Where(job => job.SalaryMin <= condition.SalaryMax);

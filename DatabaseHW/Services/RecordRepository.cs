@@ -16,8 +16,15 @@ namespace DatabaseHW.Services
 
         public void AddRecord(Record record, int accountId)
         {
-            Account account = m_Context.Accounts.Find()
+            Account account = m_Context.Accounts.Find(accountId)
                               ?? throw new ArgumentException($"ID为 {accountId} 的用户不存在");
+            // 检查历史记录是否过多
+            var records = m_Context.Records.Where(r => r.AccountId == accountId);
+            if (records.Count() >= 10)
+	            m_Context.Records.Remove(records.First());
+
+            // 添加历史记录
+            record.AccountId = accountId;
             m_Context.Records.Add(record);
             m_Context.SaveChanges();
         }
@@ -30,15 +37,15 @@ namespace DatabaseHW.Services
 
         public void RemoveAllRecord(int accountId)
         {
-            Account account = m_Context.Accounts.Find()
+            Account account = m_Context.Accounts.Find(accountId)
                               ?? throw new ArgumentException($"ID为 {accountId} 的用户不存在");
             m_Context.Records.RemoveRange(m_Context.Records.Where(r => r.AccountId == accountId));
             m_Context.SaveChanges();
         }
 
-        public List<Record> GetRecord(int accountId)
+        public List<Record> GetAllRecord(int accountId)
         {
-            Account account = m_Context.Accounts.Find()
+            Account account = m_Context.Accounts.Find(accountId)
                               ?? throw new ArgumentException($"ID为 {accountId} 的用户不存在");
             return m_Context.Records.Where(r => r.AccountId == accountId).ToList();
         }
