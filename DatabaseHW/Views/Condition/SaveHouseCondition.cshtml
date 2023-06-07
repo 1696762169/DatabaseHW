@@ -77,21 +77,20 @@
 	<button type="submit" class="btn btn-primary">保存</button>
 </form>
 
-<script src="~/js/ulimitedToggle.js"></script>
 <script>
 	@{
-		(string, int, int)[] tuples = new[]
+		(string, int, int, int, int)[] tuples = new[]
 		{
-			("price-min", -1, 1000),
-			("price-max", -1, 3000),
-			("term-min", 0, 6),
-			("term-max", 32767, 24),
-			("area-min", -1, 10),
-			("area-max", -1, 100)
+			("price-min", -1, 1000, 0, 10000),
+			("price-max", -1, 3000, 0, 10000),
+			("term-min", 0, 6, 1, 60),
+			("term-max", 32767, 24, 1, 60),
+			("area-min", -1, 10, 0, 300),
+			("area-max", -1, 100, 0, 300)
 		};
 		foreach (var tuple in tuples)
 		{
-			@Html.Raw($@"$('#{tuple.Item1}-unlimited').change(() => toggleUnlimited('{tuple.Item1}', '{tuple.Item1}-unlimited', '{tuple.Item2}', '{tuple.Item3}'));");
+			@Html.Raw($@"$('#{tuple.Item1}-unlimited').change(() => toggleUnlimited('{tuple.Item1}', '{tuple.Item1}-unlimited', {tuple.Item2}, {tuple.Item3}, {tuple.Item4}, {tuple.Item5}));");
 			@Html.Raw($@"initUnlimited('{tuple.Item1}', '{tuple.Item1}-unlimited', '{tuple.Item2}');");
 		}
 	}

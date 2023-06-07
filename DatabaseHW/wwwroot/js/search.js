@@ -148,7 +148,7 @@ function setList(location, name, showListFunc) {
                         const wrapper = $("<div>")
                             .addClass("job-list-wrapper overflow-auto")
                             .css("max-height", "75%")
-                            .css("position", "absolute")
+                            //.css("position", "absolute")
                             .append(list);
                         container.append(wrapper);
                     }
@@ -158,7 +158,7 @@ function setList(location, name, showListFunc) {
 
 // 显示地点
 function setLocationCard(location) {
-    const locationItem = $("<div>").addClass("card mb-3 mt-3");
+    const locationItem = $("<div>").addClass("card mb-3 mt-3").css("height", "20%");
     const locationBody = $("<div>").addClass("card-body");
 
     const nameElement = $("<h5>").addClass("card-title").text(location.name);
@@ -169,6 +169,8 @@ function setLocationCard(location) {
 
     const locationElement = $("<p>").addClass("card-text").text(`经度: ${location.longitude}，纬度: ${location.latitude}`);
     locationBody.append(locationElement);
+
+
 
     locationItem.append(locationBody);
     return locationItem;

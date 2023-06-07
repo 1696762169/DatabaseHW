@@ -1,4 +1,6 @@
-﻿// 初始化不限制选项
+﻿"use strict";
+
+// 初始化不限制选项
 function initUnlimited(valueId, toggleId, unlimitedValue) {
     const valueInput = document.getElementById(valueId);
     const toggleCheckbox = document.getElementById(toggleId);
@@ -9,14 +11,18 @@ function initUnlimited(valueId, toggleId, unlimitedValue) {
 }
 
 // 定义勾选不限制选项时的行为
-function toggleUnlimited(valueId, toggleId, unlimitedValue, defaultValue) {
-    const valueInput = document.getElementById(valueId);
-    const toggleCheckbox = document.getElementById(toggleId);
-    if (toggleCheckbox.checked) {
-        valueInput.disabled = true;
-        valueInput.value = unlimitedValue;
+function toggleUnlimited(valueId, toggleId, unlimitedValue, defaultValue, minValue, maxValue) {
+    const valueInput = $(`#${valueId}`);
+    const toggleCheckbox = $(`#${toggleId}`);
+    if (toggleCheckbox.prop("checked")) {
+        valueInput.val(unlimitedValue);
+        valueInput.hide();
+        valueInput.removeAttr("min");
+        valueInput.removeAttr("max");
     } else {
-        valueInput.disabled = false;
-        valueInput.value = defaultValue;
+        valueInput.show();
+        valueInput.val(defaultValue);
+        valueInput.attr("min", minValue);
+        valueInput.attr("max", maxValue);
     }
 }
