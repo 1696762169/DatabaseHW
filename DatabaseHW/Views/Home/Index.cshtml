@@ -24,10 +24,14 @@
 	<div class="row justify-content-center mt-3">
 		<div class="col-6">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="请输入搜索关键字..." asp-for="Key">
+				<input type="text" class="form-control" id="key-input" placeholder="请输入搜索关键字..." asp-for="Key">
 				<button class="btn btn-primary" type="submit">搜索</button>
 			</div>
 		</div>
+	</div>
+	@*历史记录容器*@
+	<div class="row justify-content-center mt-2">
+		<div class="col-6" id="record-container"></div>
 	</div>
 
 	@*设置经纬度和查询范围*@
@@ -46,10 +50,12 @@
 			<div class="input-group" id="range-div"></div>
 		</div>
 	</div>
-
 </form>
+
+
 
 @section Scripts
 {
 	<script src="js/marker.js"></script>
+	<script src="js/record.js"></script>
 }

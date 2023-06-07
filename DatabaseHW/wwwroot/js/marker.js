@@ -9,7 +9,7 @@ window.addEventListener("onMapLoad", (() => {
         const map = window.map;
         const aMap = window.aMap;
         // 设置地图点击事件
-        map.on("click", function (e) {
+        map.on("click", (event) => {
             // 清除先前的标记
             if (currentMaker != null) {
                 currentMaker.setMap(null);
@@ -26,7 +26,7 @@ window.addEventListener("onMapLoad", (() => {
 
             // 添加新标记并记录
             const marker = new aMap.Marker({
-                position: e.lnglat,
+                position: event.lnglat,
                 map: map
             });
             marker.setMap(map);
@@ -40,7 +40,7 @@ window.addEventListener("onMapLoad", (() => {
                 radiusInMeters = document.getElementById("range-slider").value * 1000;
             }
             const circle = new aMap.Circle({
-                center: e.lnglat,
+                center: event.lnglat,
                 radius: radiusInMeters,
                 map: map,
                 strokeColor: "#55AAEE",
@@ -52,6 +52,23 @@ window.addEventListener("onMapLoad", (() => {
             circle.setMap(map);
             currentCircle = circle;
 
+            // 添加范围设置
+            if (document.getElementById("range-slider") == null) {
+                document.getElementById("range-div").innerHTML = `
+                        <label class="input-group-text" for="modelTypeSelection" id="range-label">搜索范围：1km</label>
+                        <input type="range" class="form-range" id="range-slider" max="10.0" min="1.0" step="0.01"/>
+                    `;
+                document.getElementById("range-slider").value = 1;
+                // 设置搜索范围更改时的行为
+                $("#range-slider").on("input", event => {
+                    currentCircle.setRadius(event.target.value * 1000);
+                    document.getElementById("range-label").innerText =
+                        `搜索范围：${document.getElementById("range-slider").value}km`;
+                    document.getElementById("model-range").value =
+                        document.getElementById("range-slider").value;
+                });
+            };
+
             // 添加信息窗体
             let infoWindow;
             fetch("/html/markerContent.html")
@@ -61,34 +78,18 @@ window.addEventListener("onMapLoad", (() => {
                         content: content,
                         offset: new aMap.Pixel(0, -50)
                     });
-                    infoWindow.open(map, e.lnglat);
-                    document.getElementById("marker-longitude").value = e.lnglat.getLng();
-                    document.getElementById("marker-latitude").value = e.lnglat.getLat();
+                    infoWindow.open(map, event.lnglat);
+                    document.getElementById("marker-longitude").value = event.lnglat.getLng();
+                    document.getElementById("marker-latitude").value = event.lnglat.getLat();
                     // 将经纬度赋值给视图模型属性
-                    document.getElementById("model-longitude").value = e.lnglat.getLng();
-                    document.getElementById("model-latitude").value = e.lnglat.getLat();
-                    document.getElementById("center-label").innerText = `搜索中心经度：${e.lnglat.getLng()} 纬度：${e.lnglat.getLat()}`;
-                    if (document.getElementById("range-slider") == null) {
-                        document.getElementById("range-div").innerHTML = `
-                        <label class="input-group-text" for="modelTypeSelection" id="range-label">搜索范围：1km</label>
-                        <input type="range" class="form-range" id="range-slider" max="10.0" min="1.0" step="0.01"/>
-                    `;
-                        document.getElementById("range-slider").value = 1;
-                        // 设置搜索范围更改时的行为
-                        document.getElementById("range-slider").addEventListener("input", value => {
-                            currentCircle.setRadius(value.target.value * 1000);
-                            document.getElementById("range-label").innerText =
-                                `搜索范围：${document.getElementById("range-slider").value}km`;
-                            document.getElementById("model-range").value =
-                                document.getElementById("range-slider").value;
-                        });
-                    };
-                    
+                    document.getElementById("model-longitude").value = event.lnglat.getLng();
+                    document.getElementById("model-latitude").value = event.lnglat.getLat();
+                    document.getElementById("center-label").innerText = `搜索中心经度：${event.lnglat.getLng()} 纬度：${event.lnglat.getLat()}`;
 
                     // 获取地理编码后的地址信息
                     aMap.plugin("AMap.Geocoder", function () {
                         const geocoder = new aMap.Geocoder();
-                        geocoder.getAddress(e.lnglat, function (status, result) {
+                        geocoder.getAddress(event.lnglat, function (status, result) {
                             if (status === "complete" && result.info === "OK") {
                                 const address = result.regeocode.formattedAddress;
                                 document.getElementById("marker-address").value = address;

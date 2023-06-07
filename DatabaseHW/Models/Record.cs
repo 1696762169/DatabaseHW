@@ -17,8 +17,9 @@ namespace DatabaseHW.Models
         public float Latitude { get; set; }          // 纬度
         public DateTime ApplyTime { get; set; }      // 生成时间
         public int AccountId { get; set; }           // 所属用户，参照Account表的accountId
-        public Account Account { get; set; } = null!;// 导航属性，指向所属用户
-        public byte Range { get; set; }              // 查询位置附近最大距离，单位为千米
+        public Account? Account { get; set; } = null!;// 导航属性，指向所属用户
+        [Precision(6, 2)]
+        public float Range { get; set; }              // 查询位置附近最大距离，单位为千米
     }
 
 }

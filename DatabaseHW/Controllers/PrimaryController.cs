@@ -25,16 +25,17 @@ namespace DatabaseHW.Controllers
         public IActionResult Search(PrimarySearchViewModel model)
         {
             // 验证数据是否正确
-            if (string.IsNullOrEmpty(model.Key) && (model.Longitude >= float.MaxValue || model.Latitude >= float.MaxValue || model.Range <= 0))
+            if (string.IsNullOrEmpty(model.Key) && (model.Longitude >= 180 || model.Latitude >= 90 || model.Range < 0))
                 return Redirect("/");
             
             // 记录历史记录
 	        m_RecordRepository.AddRecord(new Record
 	        {
                 Key = model.Key,
-                Longitude = model.Longitude,
-                Latitude = model.Latitude,
+                Longitude = Math.Clamp(model.Longitude, 0, 1000),
+                Latitude = Math.Clamp(model.Latitude, 0, 1000),
                 ApplyTime = DateTime.Now,
+                Range = Math.Clamp(model.Range, 0, 1000),
 	        }, Account.ONLY_ONE);
             return View(model);
         }
@@ -62,6 +63,14 @@ namespace DatabaseHW.Controllers
 	            
 	            _ => throw new ArgumentException($"一级查询类型有误：{model.Type}")
             };
+        }
+
+        [HttpGet]
+        public IActionResult GetRecordList()
+        {
+	        List<Record> temp = m_RecordRepository.GetAllRecord(Account.ONLY_ONE);
+	        temp.ForEach(record => record.Account = null);
+			return Json(temp);
         }
     }
 }
