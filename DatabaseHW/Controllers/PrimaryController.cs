@@ -72,5 +72,18 @@ namespace DatabaseHW.Controllers
 	        temp.ForEach(record => record.Account = null);
 			return Json(temp);
         }
-    }
+
+        [HttpGet]
+        public IActionResult RemoveRecord([FromQuery] Record record)
+        {
+	        m_RecordRepository.RemoveRecord(record);
+	        return Ok();
+		}
+        [HttpGet]
+        public IActionResult RemoveAllRecord()
+        {
+	        m_RecordRepository.RemoveAllRecord(Account.ONLY_ONE);
+	        return Ok();
+        }
+	}
 }
