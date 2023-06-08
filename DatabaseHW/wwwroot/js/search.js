@@ -12,6 +12,9 @@ window.addEventListener("onMapLoad", (() => {
         // 设定查询得到的标记点
         setPrimaryMarker(model, map, aMap)
             .then((ret) => {
+                // 设置地图视野
+                setMapBounds(ret, map, aMap);
+
                 // 设置点击标记时查询相关的标记并显示
                 $.each(ret,
                     (index, item) => {
@@ -115,6 +118,22 @@ function setPrimaryMarker(model, map, aMap) {
                 reject(err); // 解析 Promise，并传递错误作为拒绝值
             });
     });
+}
+// 根据坐标设置地图视野
+function setMapBounds(locations, map, aMap) {
+    if (locations.length === 0) {
+        return;
+    }
+    const southWest = new aMap.LngLat(locations[0].data.longitude, locations[0].data.latitude);
+    const northEast = new aMap.LngLat(locations[0].data.longitude, locations[0].data.latitude);
+    $.each(locations,
+        (index, item) => {
+            southWest.lng = Math.min(southWest.lng, item.data.longitude);
+            southWest.lat = Math.min(southWest.lat, item.data.latitude);
+            northEast.lng = Math.max(northEast.lng, item.data.longitude);
+            northEast.lat = Math.max(northEast.lat, item.data.latitude);
+        });
+    map.setBounds(new aMap.Bounds(southWest, northEast));
 }
 
 // 查询二级结果并将结果显示在列表中
