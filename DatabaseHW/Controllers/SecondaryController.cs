@@ -10,7 +10,8 @@ namespace DatabaseHW.Controllers
 		private readonly IHouseFilter m_HouseFilter;
 		private readonly ICompanyRepository m_CompanyRepository;
 
-		public SecondaryController(IJobFilter jobFilter, IHouseFilter houseFilter, ICompanyRepository companyRepository)
+		public SecondaryController(IJobFilter jobFilter, IHouseFilter houseFilter, 
+			ICompanyRepository companyRepository)
 		{
 			m_JobFilter = jobFilter;
 			m_HouseFilter = houseFilter;

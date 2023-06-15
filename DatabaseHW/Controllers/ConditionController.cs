@@ -1,9 +1,7 @@
 ﻿using DatabaseHW.Models;
 using DatabaseHW.Services.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DatabaseHW.Controllers
 {
@@ -47,6 +45,21 @@ namespace DatabaseHW.Controllers
 		{
 			try
 			{
+				if (condition.SalaryMin > condition.SalaryMax)
+				{
+					condition.SalaryMin = condition.SalaryMax;
+					return PartialView(condition);
+				}
+				if (condition.PeriodMin > condition.PeriodMax)
+				{
+					condition.PeriodMin = condition.PeriodMax;
+					return PartialView(condition);
+				}
+				if (condition.FreMin > condition.FreMax)
+				{
+					condition.FreMin = condition.FreMax;
+					return PartialView(condition);
+				}
 				m_ConditionRepository.UpdateJobCondition(condition);
 			}
 			catch (DbUpdateException)
@@ -60,6 +73,21 @@ namespace DatabaseHW.Controllers
 		{
 			try
 			{
+				if (condition.PriceMin > condition.PriceMax)
+				{
+					condition.PriceMin = condition.PriceMax;
+					return PartialView(condition);
+				}
+				if (condition.AreaMin > condition.AreaMax)
+				{
+					condition.AreaMin = condition.AreaMax;
+					return PartialView(condition);
+				}
+				if (condition.TermMin > condition.TermMax)
+				{
+					condition.TermMin = condition.TermMax;
+					return PartialView(condition);
+				}
 				m_ConditionRepository.UpdateHouseCondition(condition);
 			}
 			catch (DbUpdateException)

@@ -70,6 +70,7 @@ namespace DatabaseHW.Controllers
         {
 	        List<Record> temp = m_RecordRepository.GetAllRecord(Account.ONLY_ONE);
 	        temp.ForEach(record => record.Account = null);
+	        temp.Sort((a, b) => b.ApplyTime.Ticks - a.ApplyTime.Ticks > 0 ? 1 : -1);
 			return Json(temp);
         }
 

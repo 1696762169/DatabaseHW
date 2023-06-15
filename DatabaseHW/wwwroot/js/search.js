@@ -40,6 +40,7 @@ window.addEventListener("onMapLoad", (() => {
                                 if (currentCircle != null) {
                                     currentCircle.setMap(null);
                                 }
+
                                 // 生成结果列表
                                 if (model.type === "Workplace")
                                     setList(item.data, "job", setJobList);
@@ -65,7 +66,7 @@ window.addEventListener("onMapLoad", (() => {
                                     .then((ret) => {
                                         $.each(ret,
                                             (index, item) => {
-                                                // 记录标记
+                                                // 记录标记和窗口
                                                 currentMarkers.push(item.marker);
                                                 item.marker.on("click",
                                                     () => {
@@ -103,12 +104,14 @@ function setPrimaryMarker(model, map, aMap) {
                                 new aMap.LngLat(item.longitude, item.latitude)))
                             return true;
                         // 添加标记点
+                        const lnglat = new aMap.LngLat(item.longitude, item.latitude);
                         const marker = new aMap.Marker({
-                            position: new aMap.LngLat(item.longitude, item.latitude),
+                            position: lnglat,
                             map: map,
                             icon: icon
                         });
                         marker.setMap(map);
+
                         ret.push({ data: item, marker: marker });
                         return true;
                     });

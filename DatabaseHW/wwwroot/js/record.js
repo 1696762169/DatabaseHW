@@ -70,9 +70,7 @@ function setRecordList(records) {
         // 添加点击事件
         recordItem.on("click", (e) => {
             // 设置关键字
-            if (record.key != null) {
-                $("#key-input").val(record.key);
-            }
+            $("#key-input").val(record.key ?? "");
             if (record.longitude <= 180 && record.latitude <= 90) {
                 // 点击地图
                 const map = window.map;
